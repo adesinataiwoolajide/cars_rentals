@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 04, 2019 at 03:41 PM
+-- Generation Time: Oct 04, 2019 at 06:20 PM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.2.17
 
@@ -67,7 +67,18 @@ INSERT INTO `activity` (`act_id`, `action`, `user_details`, `time_added`) VALUES
 (25, 'tolajide74@gmail.com', 'Deleted Lexus from the Brands List', '2019-10-03 22:29:44'),
 (26, 'tolajide74@gmail.com', 'Added Lexus to the Brands List', '2019-10-03 22:29:55'),
 (27, 'tolajide74@gmail.com', 'Updated Toyota Corola Details', '2019-10-03 22:35:46'),
-(28, 'Logged Out', 'tolajide74@gmail.com', '2019-10-03 22:36:00');
+(28, 'Logged Out', 'tolajide74@gmail.com', '2019-10-03 22:36:00'),
+(29, 'tolajide74@gmail.com', 'Added Audi to the Brands List', '2019-10-04 15:22:30'),
+(30, 'tolajide74@gmail.com', 'Added Car to the Categories List', '2019-10-04 15:22:40'),
+(31, 'tolajide74@gmail.com', 'Updated Bus to the Categories List', '2019-10-04 15:22:46'),
+(32, 'Added end-of-discussion-4215 To The Car List', 'tolajide74@gmail.com', '2019-10-04 15:23:17'),
+(33, 'Added benz-1885 To The Car List', 'tolajide74@gmail.com', '2019-10-04 15:42:27'),
+(34, 'tolajide74@gmail.com', 'Added Benz to the Brands List', '2019-10-04 15:42:46'),
+(35, 'Added shuffle-4507 To The Car List', 'tolajide74@gmail.com', '2019-10-04 15:43:31'),
+(36, 'Deleted benz-1885 From The Car List', 'tolajide74@gmail.com', '2019-10-04 15:51:18'),
+(37, 'Added benzo-3499 To The Car List', 'tolajide74@gmail.com', '2019-10-04 15:51:51'),
+(38, 'Updated benzo-3499 Details', 'tolajide74@gmail.com', '2019-10-04 16:17:27'),
+(39, 'Updated benzo-3499 Details', 'tolajide74@gmail.com', '2019-10-04 16:18:22');
 
 -- --------------------------------------------------------
 
@@ -112,7 +123,39 @@ CREATE TABLE `brands` (
 INSERT INTO `brands` (`brand_id`, `brand_name`, `time_registered`) VALUES
 (1, 'Honda Accord', '2019-10-03 22:27:16'),
 (2, 'Toyota Corola', '2019-10-03 22:35:46'),
-(4, 'Lexus', '2019-10-03 22:29:55');
+(4, 'Lexus', '2019-10-03 22:29:55'),
+(5, 'Audi', '2019-10-04 15:22:30'),
+(6, 'Benz', '2019-10-04 15:42:46');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cars`
+--
+
+CREATE TABLE `cars` (
+  `car_id` int(255) NOT NULL,
+  `slug` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `brand_id` int(255) NOT NULL,
+  `category_id` int(255) NOT NULL,
+  `capacity` text NOT NULL,
+  `facilities` text NOT NULL,
+  `description` text NOT NULL,
+  `car_image` text NOT NULL,
+  `status` int(1) NOT NULL,
+  `color` text NOT NULL,
+  `time_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `cars`
+--
+
+INSERT INTO `cars` (`car_id`, `slug`, `name`, `brand_id`, `category_id`, `capacity`, `facilities`, `description`, `car_image`, `status`, `color`, `time_added`) VALUES
+(1, 'end-of-discussion-4215', 'End of Discussion', 5, 4, '4', 'AC, MAP, GPS', 'This car is awesome', 'audi-offer.png', 1, 'Black', '2019-10-04 15:23:17'),
+(3, 'shuffle-4507', 'Shuffle', 4, 4, '4', 'AC, MAP, GPS, LOCATOR', 'This car is great', 'bmw-offer.png', 1, 'Light Gray', '2019-10-04 15:43:31'),
+(4, 'benzo-3499', 'Lambo', 4, 3, '5', 'AC, MAP, GPS, LOCATOR, OTHERS', 'This car is something else', 'gallery-1.jpg', 1, 'Purple', '2019-10-04 16:18:21');
 
 -- --------------------------------------------------------
 
@@ -131,8 +174,9 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`category_id`, `category_name`, `time_registered`) VALUES
-(1, 'Buses', '2019-10-03 22:16:00'),
-(3, 'Lorry', '2019-10-03 22:15:35');
+(1, 'Bus', '2019-10-04 15:22:46'),
+(3, 'Lorry', '2019-10-03 22:15:35'),
+(4, 'Car', '2019-10-04 15:22:40');
 
 -- --------------------------------------------------------
 
@@ -183,6 +227,12 @@ ALTER TABLE `brands`
   ADD PRIMARY KEY (`brand_id`);
 
 --
+-- Indexes for table `cars`
+--
+ALTER TABLE `cars`
+  ADD PRIMARY KEY (`car_id`);
+
+--
 -- Indexes for table `categories`
 --
 ALTER TABLE `categories`
@@ -202,7 +252,7 @@ ALTER TABLE `drivers`
 -- AUTO_INCREMENT for table `activity`
 --
 ALTER TABLE `activity`
-  MODIFY `act_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `act_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `administrator`
@@ -214,13 +264,19 @@ ALTER TABLE `administrator`
 -- AUTO_INCREMENT for table `brands`
 --
 ALTER TABLE `brands`
-  MODIFY `brand_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `brand_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `cars`
+--
+ALTER TABLE `cars`
+  MODIFY `car_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `category_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `category_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `drivers`

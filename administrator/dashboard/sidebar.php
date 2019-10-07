@@ -22,10 +22,11 @@
                                 <span><?php echo $role ?></span>
                             </div>
                         </li>
+                        
                         <li class="active"><a href="./"><i class="icon_lifesaver"></i> <span> DASHBOARD</span></a></li>
+                        <li><a href="users"><i class="fa fa-users"></i> <span> USERS</span></a></li>
                         <li><a href="categories"><i class="icon_cog"></i> <span> CATEGORIES</span></a></li>
                         <li><a href="brands"><i class="icon_cog"></i> <span> BRANDS</span></a></li>
-                        <li><a href="users"><i class="fa fa-users"></i> <span> USERS</span></a></li>
                         <li><a href="drivers"><i class="fa fa-cogs"></i> <span> DRIVERS</span></a></li>
                         <li><a href="cars"><i class="fa fa-car"></i> <span>CARS</span></a></li>
                         <li><a href="orders"><i class="fa fa-shopping-cart"></i> <span> ORDERS</span></a></li>

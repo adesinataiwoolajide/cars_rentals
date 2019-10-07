@@ -13,6 +13,7 @@
     $user = new User();
     $driver = new Driver();
     $brand = new Brand();
+    $car = new Car();
 	$role = $_SESSION['role'];
 ?>
 <!doctype html>

@@ -1,3 +1,15 @@
+<?php
+    session_start();
+    require_once("Dev/autoload.php");
+	require("Dev/general/all_purpose_class.php");
+	require('Dev/Database.php');
+	
+	$categories = new Categories();
+    $user = new User();
+    $driver = new Driver();
+    $brand = new Brand();
+    $car = new Car();
+    ?>
 <!DOCTYPE html>
 <html lang="en-US">
    <head>
@@ -8,7 +20,7 @@
       <meta name="keyword" content="taxi,car,rent,hire,transport">
       <meta name="author" content="Themescare">
       <!-- Title -->
-      <title>Book Cars</title>
+      <title>Car Bookings</title>
       <!-- Favicon -->
       <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon/favicon-32x32.png">
       <!--Bootstrap css-->
@@ -133,12 +145,24 @@
                            <li class=""><a href="team"> Our Team</a></li>
                            
                            <li>
-                              <a href="">Brand</a>
-                              <ul>
-                                 <li><a href="brand">Brand Name</a></li>
+                              <a href="">Brands</a>
+                              <ul><?php
+                                 foreach($brand->getAllBrand() as $listBrand) { ?>
+                                    <li><a href="brand?brand_name=<?php echo $listBrand['brand_name'] ?>"><?php echo $listBrand['brand_name'] ?></a></li><?php 
+                                 } ?>
                                  
                               </ul>
                            </li>
+                           <li>
+                              <a href="">Categories</a>
+                              <ul><?php
+                                 foreach($categories->getAllCategory() as $listCa) { ?>
+                                    <li><a href="categories?category_name=<?php echo $listCa['category_name'] ?>"><?php echo $listCa['category_name'] ?></a></li><?php 
+                                 } ?>
+                                 
+                              </ul>
+                           </li>
+
                            <li class=""><a href="contactus">contact us</a></li>
                            
                            

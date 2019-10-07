@@ -1,11 +1,11 @@
 <?php 
     class Car {
 
-        public function deleteUserAccount($slug)
+        public function deleteCar($slug)
 		{
 			$db = Database::getInstance()->getConnection();
 			$query = $db->prepare("DELETE FROM cars WHERE slug=:slug");
-			$query->bindValue(":car_id", $car_id);
+			$query->bindValue(":slug", $slug);
 			if($query->execute()){
 				return true;
 			}else{
@@ -14,7 +14,7 @@
 			
         }
 
-        public function getAllUser()
+        public function getAllCar()
 		{
 			$db = Database::getInstance()->getConnection();
 			$query = $db->prepare("SELECT * FROM cars ORDER BY car_id desc");
@@ -41,20 +41,21 @@
 			return $text."-".rand(1111,9999);		
 		}	
 
-        public function addCar($slug, $name, $brand, $category_id, $capacity, $facilities, $description, $car_image, $status, $color)
+        public function addCar($slug, $name, $brand_id, $category_id, $capacity, $facilities, $description, $car_image, $status, $color, $price)
         {
             $db = Database::getInstance()->getConnection();
-            $query = $db->prepare("INSERT INTO cars(slug, name, brand, category_id, capacity, facilities, description, car_image, status, color)
-                 VALUES (:name, :brand, :category_id, :capacity, :facilities, :description, :car_image, :status, :color)");
+            $query = $db->prepare("INSERT INTO cars(slug, name, brand_id, category_id, capacity, facilities, description, car_image, status, color, price)
+                 VALUES (:slug, :name, :brand_id, :category_id, :capacity, :facilities, :description, :car_image, :status, :color, :price)");
             $query->bindValue(":name", $name);
-            $query->bindValue(":brand", $brand);
+            $query->bindValue(":brand_id", $brand_id);
             $query->bindValue(":category_id", $category_id);
             $query->bindValue(":capacity", $capacity);
             $query->bindValue(":facilities", $facilities);
             $query->bindValue(":description", $description);
             $query->bindValue(":car_image", $car_image);
             $query->bindValue(":status", $status);
-            $query->bindValue(":color", $color);
+			$query->bindValue(":color", $color);
+			$query->bindValue(":price", $price);
             $query->bindValue(":slug", $slug);
 
             if(!empty($query->execute())){
@@ -64,20 +65,21 @@
             }
         }
 
-        public function updateCar($name, $brand, $category_id, $capacity, $facilities, $description, $car_image, $status, $color, $car_id, $slug)
+        public function updateCar($name, $brand_id, $category_id, $capacity, $facilities, $description, $car_image, $status, $color, $price, $slug)
         {
             $db = Database::getInstance()->getConnection();
-            $query = $db->prepare("UPDATE cars SET (name=:name, brand=:brand, category_id=:category_id, capacity=:capacity, 
-                facilities=:facilities, description=:description, car_image=:car_image, status=:status, color=:color WHERE slug=:slug");
+            $query = $db->prepare("UPDATE cars SET name=:name, brand_id=:brand_id, category_id=:category_id, capacity=:capacity, facilities=:facilities, description=:description, 
+			car_image=:car_image, status=:status, color=:color, price=:price WHERE slug=:slug");
             $query->bindValue(":name", $name);
-            $query->bindValue(":brand", $brand);
+            $query->bindValue(":brand_id", $brand_id);
             $query->bindValue(":category_id", $category_id);
             $query->bindValue(":capacity", $capacity);
             $query->bindValue(":facilities", $facilities);
             $query->bindValue(":description", $description);
             $query->bindValue(":car_image", $car_image);
             $query->bindValue(":status", $status);
-            $query->bindValue(":color", $color);
+			$query->bindValue(":color", $color);
+			$query->bindValue(":price", $price);
             $query->bindValue(":slug", $slug);
 
             if(!empty($query->execute())){
@@ -95,7 +97,6 @@
 			$query->execute();
 			return $query->fetchAll(PDO::FETCH_ASSOC);
 		}
-
 		public function getSingleCar($slug)
 		{
 			$db = Database::getInstance()->getConnection();
@@ -105,6 +106,25 @@
 			return $query->fetch();
         }
         
+
+		public function getSingleBrandList($brand_id)
+		{
+			$db = Database::getInstance()->getConnection();
+            $query = $db->prepare("SELECT * FROM cars WHERE brand_id=:brand_id");
+            $query->bindValue(":brand_id", $brand_id);
+			$query->execute();
+			return $query->fetchAll(PDO::FETCH_ASSOC);
+		}
+		public function getSingleCategoryList($category_id)
+		{
+			$db = Database::getInstance()->getConnection();
+            $query = $db->prepare("SELECT * FROM cars WHERE category_id=:category_id");
+            $query->bindValue(":category_id", $category_id);
+			$query->execute();
+			return $query->fetchAll(PDO::FETCH_ASSOC);
+		}
+
+		
         public function getPaginateACrs($start, $itemsPerPage)
 		{
 			$db = Database::getInstance()->getConnection();
@@ -123,5 +143,33 @@
 			$query->execute();
 			return $query->fetchAll(PDO::FETCH_ASSOC);
 		}
+
+		public function countBrand($brand_id)
+		{
+			$db = Database::getInstance()->getConnection();
+            $query = $db->prepare("SELECT count(brand_id) as newbrand FROM cars WHERE brand_id=:brand_id");
+            $query->bindValue(":brand_id", $brand_id);
+			$query->execute();
+			$count= $query->fetch();
+			return $count['newbrand'];
+		}
+		public function countCategory($category_id)
+		{
+			$db = Database::getInstance()->getConnection();
+            $query = $db->prepare("SELECT count(category_id) as newcat FROM cars WHERE category_id=:category_id");
+            $query->bindValue(":category_id", $category_id);
+			$query->execute();
+			$count= $query->fetch();
+			return $count['newcat'];
+		}
+		
+		public function countCar()
+		{
+			$db = Database::getInstance()->getConnection();
+            $query = $db->prepare("SELECT count(car_id) as newbrand FROM cars");
+			$query->execute();
+			$count= $query->fetch();
+			return $count['newbrand'];
+        }
     }
 ?>
